@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 import { Schedule } from './schedule.model';
 
@@ -11,9 +12,14 @@ export class SchedulesService {
   private schedules: Schedule[] = [];
   private schedulesUpdated = new Subject<Schedule[]>();
 
+  constructor(private http: HttpClient) {}
+
   getSchedules() {
-    // Pass by value, not reference
-    return [...this.schedules];
+    this.http.get<{message:string, schedules: Schedule[]}>('http://localhost:3000/api/schedules')
+      .subscribe((schData) => {
+        this.schedules = schData.schedules;
+        this.schedulesUpdated.next([...this.schedules]);
+      });
   }
 
   getScheduleUpdateListener() {

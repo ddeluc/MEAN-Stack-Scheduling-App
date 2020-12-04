@@ -17,7 +17,7 @@ export class ScheduleListComponent implements OnInit, OnDestroy {
   constructor(public schedulesService: SchedulesService) {}
 
   ngOnInit() {
-    this.schedules = this.schedulesService.getSchedules();
+    this.schedulesService.getSchedules();
     this.schedulesSub = this.schedulesService.getScheduleUpdateListener()
       .subscribe((schedules: Schedule[]) => {
         this.schedules = schedules;
