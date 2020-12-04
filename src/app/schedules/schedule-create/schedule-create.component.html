@@ -1,0 +1,20 @@
+<mat-card>
+  <form (submit)="onCreateSchedule(scheduleForm)" #scheduleForm="ngForm">
+    <mat-form-field>
+      <input matInput
+      type="text"
+      name="name"
+      ngModel
+      required
+      minlength="3"
+      placeholder="Schedule Name"
+      #name="ngModel">
+      <mat-error *ngIf="name.invalid">Please enter a schedule name.</mat-error>
+    </mat-form-field>
+    <div>
+      <button
+      mat-raised-button color="accent"
+      type="submit">Create Schedule</button>
+    </div>
+  </form>
+</mat-card>

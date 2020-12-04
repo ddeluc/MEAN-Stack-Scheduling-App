@@ -1,0 +1,13 @@
+<mat-accordion multi=true *ngIf="schedules.length > 0">
+  <mat-expansion-panel *ngFor="let schedule of schedules">
+    <mat-expansion-panel-header>
+      {{ schedule.name }}
+    </mat-expansion-panel-header>
+    <p>{{ schedule.courses }}</p>
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="mat-body-1" *ngIf="schedules.length <= 0">No schedules added.</p>
