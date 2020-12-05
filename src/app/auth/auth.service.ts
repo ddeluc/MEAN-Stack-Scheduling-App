@@ -7,6 +7,7 @@ import { AuthData } from './auth-data.model';
   providedIn: "root"
 })
 export class AuthService {
+  private isAuthenticated = false;
   private token: string | undefined;
   private authStatusListener = new Subject<boolean>();
 
@@ -14,6 +15,10 @@ export class AuthService {
 
   getToken() {
     return this.token;
+  }
+
+  getIsAuth() {
+    return this.isAuthenticated;
   }
 
   // Any component that is concerned with whether or not a user
@@ -41,7 +46,16 @@ export class AuthService {
       .subscribe(response => {
         const token = response.token;
         this.token = token;
-        this.authStatusListener.next(true);
+        if (token) {
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+        }
       })
+  }
+
+  logout() {
+    this.token = undefined;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
   }
 }

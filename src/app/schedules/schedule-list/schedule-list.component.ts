@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { SchedulesService } from '../schedules.service';
 import { Schedule } from '../schedule.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-schedule-list',
@@ -12,15 +13,23 @@ import { Schedule } from '../schedule.model';
 export class ScheduleListComponent implements OnInit, OnDestroy {
   // Listen for incoming data
   schedules: Schedule[] = [];
+  public userIsAuthenticated = false;
   private schedulesSub: Subscription | undefined;
+  private authStatusSub: Subscription | undefined;
 
-  constructor(public schedulesService: SchedulesService) {}
+  constructor(public schedulesService: SchedulesService, private authService: AuthService) {}
+
 
   ngOnInit() {
     this.schedulesService.getSchedules();
     this.schedulesSub = this.schedulesService.getScheduleUpdateListener()
       .subscribe((schedules: Schedule[]) => {
         this.schedules = schedules;
+      });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService.getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
       });
   }
 
@@ -32,5 +41,6 @@ export class ScheduleListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.schedulesSub)
       this.schedulesSub.unsubscribe();
+    this.authStatusSub?.unsubscribe();
   }
 }

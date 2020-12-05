@@ -4,7 +4,7 @@
       {{ schedule.name }}
     </mat-expansion-panel-header>
     <p>{{ schedule.courses }}</p>
-    <mat-action-row>
+    <mat-action-row *ngIf="userIsAuthenticated">
       <a mat-button color="primary" [routerLink]="['/edit', schedule.id]">Edit</a>
       <button mat-button color="warn" (click)="onDelete(schedule.id)">Delete</button>
     </mat-action-row>
