@@ -15,6 +15,7 @@ import { ScheduleCreateComponent } from './schedules/schedule-create/schedule-cr
 import { HeaderComponent } from './header/header.component';
 import { ScheduleListComponent } from './schedules/schedule-list/schedule-list.component';
 import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { LoginComponent } from './auth/login/login.component';
     ScheduleCreateComponent,
     HeaderComponent,
     ScheduleListComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

@@ -3,11 +3,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const schedulesRoutes = require("./routes/schedules");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
 // Connnect to database
-mongoose.connect("mongodb+srv://ddeluc:m7BVWwh2qOWQ2sJj@cluster0.dqio7.mongodb.net/node-angular?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://ddeluc:m7BVWwh2qOWQ2sJj@cluster0.dqio7.mongodb.net/node-angular")
   .then(() => {
     console.log('Connected to database!');
   })
@@ -25,7 +26,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Any request that starts with the following will be directed to the respective route file
 app.use("/api/schedules", schedulesRoutes);
+app.use("/api/user", userRoutes);
 
 module.exports = app;
 
