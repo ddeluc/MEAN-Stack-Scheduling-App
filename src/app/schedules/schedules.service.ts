@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators'
 
@@ -36,10 +36,8 @@ export class SchedulesService {
     return this.schedulesUpdated.asObservable();
   }
 
-  // Retrieve schedule from local array
-  getSchedule(name: string): Schedule {
-    const sch: Schedule = {...this.schedules.find(sch => sch.name === name)} as Schedule;
-    return sch;
+  getSchedule(id: string) {
+    return this.http.get<{_id: string, name: string, courses: number}>("http://localhost:3000/api/schedules/" + id);
   }
 
   addSchedule(name: string) {
@@ -60,7 +58,13 @@ export class SchedulesService {
   updateSchedule(id: string, schName: string) {
     const schedule: Schedule = { id: id, name: schName, courses: 0};
     this.http.put("http://localhost:3000/api/schedules/" + id, schedule)
-      .subscribe(response => console.log(response));
+      .subscribe(response => {
+        const updatedSchedules = [...this.schedules];
+        const oldScheduleIndex = updatedSchedules.findIndex(s => s.id === schedule.id);
+        updatedSchedules[oldScheduleIndex] = schedule;
+        this.schedules = updatedSchedules;
+        this.schedulesUpdated.next([...this.schedules]);
+      });
   }
 
   deleteSchedule(schId: string) {

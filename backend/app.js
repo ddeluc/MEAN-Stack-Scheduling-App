@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Schedule = require('./models/schedule');
+const schedulesRoutes = require("./routes/schedules");
 
 const app = express();
 
@@ -25,54 +25,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/schedules', (req, res, next) => {
-  const schedule = new Schedule({
-    name: req.body.name,
-    courses: req.body.courses
-  });
-  schedule.save().then(result => {
-    console.log(result._id);
-    console.log(result);
-    res.status(201).json({
-      message: 'Added Successfully',
-      schId: result._id
-    });
-  });
-});
-
-app.put('/api/schedules/:id', (req, res, next) => {
-  const sch = new Schedule({
-    _id: req.body.id,
-    name: req.body.name,
-    courses: req.body.courses
-  })
-  Schedule.updateOne({_id: req.params.id}, sch).then(result => {
-    console.log(result);
-    res.status(200).json({message: "Updated Schedule."});
-  })
-});
-
-app.get('/api/schedules',(req, res, next) => {
-  Schedule.find().then(documents => {
-    res.status(200).json({
-      message: 'Success!',
-      schedules: documents
-    });
-  });
-
-});
-
-app.delete('/api/schedules/:id', (req, res, next) => {
-  console.log(req.params.id);
-  Schedule.deleteOne({_id: req.params.id}).then(result => {
-    console.log(result)
-    res.status(200).json({message: 'Schedule deleted!'})
-  })
-  .catch(err => {
-    console.log("Failed to delete schedule.")
-    console.log(err);
-  })
-});
+app.use("/api/schedules", schedulesRoutes);
 
 module.exports = app;
 

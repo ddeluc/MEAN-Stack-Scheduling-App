@@ -26,7 +26,9 @@ export class ScheduleCreateComponent implements OnInit {
         if (data !== null)
           this.scheduleId = data;
           console.log(this.scheduleId);
-          this.schedule = this.schedulesService.getSchedule(this.scheduleId!);
+          this.schedulesService.getSchedule(this.scheduleId!).subscribe((schedule: { _id: any; name: any; courses: any; }) => {
+            this.schedule = {id: schedule._id, name: schedule.name, courses: schedule.courses};
+          });
         this.mode = 'edit';
       } else {
         console.log("Create Page.")
