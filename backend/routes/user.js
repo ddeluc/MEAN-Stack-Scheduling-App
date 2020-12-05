@@ -3,11 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
 const User = require("../models/user");
-const user = require('../models/user');
 
 const router = express.Router();
 
-// Create a new user
+// Create a new user (not protected)
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -30,6 +29,7 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
+// Login user (not protected)
 router.post('/login', (req, res, next) => {
   let fetchedUser;
   User.findOne({ email: req.body.email }).then(user => {

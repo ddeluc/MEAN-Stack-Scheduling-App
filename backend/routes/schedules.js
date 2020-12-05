@@ -2,9 +2,10 @@ const Schedule = require('../models/schedule');
 const express = require("express");
 
 const router = express.Router();
+const checkAuth = require("../middleware/check-auth");
 
-// Post a schedule
-router.post('', (req, res, next) => {
+// Post a schedule (protected)
+router.post('', checkAuth, (req, res, next) => {
   const schedule = new Schedule({
     name: req.body.name,
     courses: req.body.courses
@@ -19,8 +20,8 @@ router.post('', (req, res, next) => {
   });
 });
 
-// Update a schedule
-router.put('/:id', (req, res, next) => {
+// Update a schedule (protected)
+router.put('/:id', checkAuth, (req, res, next) => {
   const sch = new Schedule({
     _id: req.body.id,
     name: req.body.name,
@@ -31,7 +32,7 @@ router.put('/:id', (req, res, next) => {
   })
 });
 
-// Get add schedules
+// Get add schedules (not protected)
 router.get('',(req, res, next) => {
   Schedule.find().then(documents => {
     res.status(200).json({
@@ -41,7 +42,7 @@ router.get('',(req, res, next) => {
   });
 });
 
-// Get single schedule by id ***NOT WORKING***
+// Get single schedule by id ***NOT WORKING*** (not protected)
 router.get('/:id', (req, res, next) => {
   Schedule.findById(req.params.id).then(sch => {
     if (sch) {
@@ -52,8 +53,8 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
-// Delete a schedule by id
-router.delete('/:id', (req, res, next) => {
+// Delete a schedule by id (protected)
+router.delete('/:id', checkAuth, (req, res, next) => {
   console.log(req.params.id);
   Schedule.deleteOne({_id: req.params.id}).then(result => {
     console.log(result)
