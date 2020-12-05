@@ -6,7 +6,8 @@ import { ScheduleListComponent } from './schedules/schedule-list/schedule-list.c
 // Define routes
 const routes: Routes = [
   { path: '', component: ScheduleListComponent },
-  { path: 'create', component: ScheduleCreateComponent}
+  { path: 'create', component: ScheduleCreateComponent},
+  { path: 'edit/:scheduleId', component: ScheduleCreateComponent }
 ];
 
 @NgModule({

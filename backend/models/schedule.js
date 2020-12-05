@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const scheduleSchema = mongoose.Schema({
-  name: String,
+  name: String ,
   courses: Number
 });
 

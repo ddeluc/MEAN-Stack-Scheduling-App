@@ -1,5 +1,5 @@
 <mat-card>
-  <form (submit)="onCreateSchedule(scheduleForm)" #scheduleForm="ngForm">
+  <form (submit)="onSaveSchedule(scheduleForm)" #scheduleForm="ngForm">
     <mat-form-field>
       <input matInput
       type="text"
@@ -14,7 +14,7 @@
     <div>
       <button
       mat-raised-button color="accent"
-      type="submit">Create Schedule</button>
+      type="submit">Save Schedule</button>
     </div>
   </form>
 </mat-card>

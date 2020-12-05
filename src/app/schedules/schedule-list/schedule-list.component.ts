@@ -24,8 +24,9 @@ export class ScheduleListComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(schName: string) {
-    this.schedulesService.deleteSchedule(schName);
+  onDelete(schId: string) {
+    console.log(">>>>>>" + schId)
+    this.schedulesService.deleteSchedule(schId);
   }
 
   ngOnDestroy() {
