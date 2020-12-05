@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './auth/login/login.component';
 import { ScheduleCreateComponent } from './schedules/schedule-create/schedule-create.component';
 import { ScheduleListComponent } from './schedules/schedule-list/schedule-list.component';
 
@@ -7,7 +8,8 @@ import { ScheduleListComponent } from './schedules/schedule-list/schedule-list.c
 const routes: Routes = [
   { path: '', component: ScheduleListComponent },
   { path: 'create', component: ScheduleCreateComponent},
-  { path: 'edit/:scheduleId', component: ScheduleCreateComponent }
+  { path: 'edit/:scheduleId', component: ScheduleCreateComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
