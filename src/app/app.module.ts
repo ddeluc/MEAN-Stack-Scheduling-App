@@ -18,6 +18,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { AccountComponent } from './auth/account/account.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HeaderComponent,
     ScheduleListComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

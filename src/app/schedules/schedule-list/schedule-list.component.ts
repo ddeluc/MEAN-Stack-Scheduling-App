@@ -28,8 +28,8 @@ export class ScheduleListComponent implements OnInit, OnDestroy {
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService.getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
+      .subscribe((isAuthenticated: {isAuth: boolean, username: string})=> {
+        this.userIsAuthenticated = isAuthenticated.isAuth;
       });
   }
 

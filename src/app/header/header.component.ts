@@ -11,13 +11,16 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSub: Subscription | undefined;
+  username: string | undefined;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSub = this.authService.getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
+      .subscribe((isAuthenticated: {isAuth: boolean, username: string}) => {
+        this.username = isAuthenticated.username;
+        this.userIsAuthenticated = isAuthenticated.isAuth;
       });
   }
 
@@ -26,6 +29,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
+    this.authListenerSub?.unsubscribe();
   }
 }

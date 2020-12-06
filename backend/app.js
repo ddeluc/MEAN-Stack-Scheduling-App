@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const schedulesRoutes = require("./routes/schedules");
 const userRoutes = require("./routes/user");
+const courseRoutes = require("./routes/course");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 // Any request that starts with the following will be directed to the respective route file
 app.use("/api/schedules", schedulesRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/course", courseRoutes);
 
 module.exports = app;
 

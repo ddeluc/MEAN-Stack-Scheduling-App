@@ -2,6 +2,16 @@
   <form (submit)="onSignup(signupForm)" #signupForm="ngForm">
     <mat-form-field>
       <input matInput
+      name="name"
+      type="name"
+      ngModel
+      placeholder="Name"
+      required
+      #nameInput="ngModel">
+      <mat-error *ngIf="nameInput.invalid">Please enter your name.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
       name="email"
       type="email"
       ngModel

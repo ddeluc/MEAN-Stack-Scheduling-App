@@ -11,8 +11,10 @@ router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
-        email:req.body.email,
-        password: hash
+        name: req.body.name,
+        email: req.body.email,
+        password: hash,
+        activated: true
       })
       user.save()
         .then(result => {
@@ -60,7 +62,8 @@ router.post('/login', (req, res, next) => {
       // Return token
       res.status(200).json({
         token: token,
-        expiresIn: 3600
+        expiresIn: 3600,
+        name: fetchedUser.name
       });
     })
     // Errpr

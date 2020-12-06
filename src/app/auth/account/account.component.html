@@ -1,0 +1,20 @@
+<mat-card>
+  <form (submit)="onUpdatePassword(updateForm)" #updateForm="ngForm">
+    <a>Activated Status</a>
+    <mat-form-field>
+      <input matInput
+      name="password"
+      type="password"
+      ngModel
+      placeholder="Update Password"
+      required
+      #passwordInput="ngModel">
+      <mat-error *ngIf="passwordInput.invalid">Please updated your password.</mat-error>
+    </mat-form-field>
+    <div>
+      <button
+      mat-raised-button color="accent"
+      type="submit">Update</button>
+    </div>
+  </form>
+</mat-card>
