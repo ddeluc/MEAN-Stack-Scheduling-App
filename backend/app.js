@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 // Any request that starts with the following will be directed to the respective route file
 app.use("/api/schedules", schedulesRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/course", courseRoutes);
+app.use("/api/courses", courseRoutes);
 
 module.exports = app;
 

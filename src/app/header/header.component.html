@@ -4,11 +4,11 @@
   </span>
   <span class="spacer"></span>
   <ul>
-    <li>
-      <a mat-button routerLink="/account" routerLinkActive="mat-accent">{{ username }}</a>
-    </li>
     <li *ngIf="userIsAuthenticated">
       <a mat-button routerLink="/account" routerLinkActive="mat-accent">{{ username }}</a>
+    </li>
+    <li>
+      <a mat-button routerLinkActive="mat-accent">Courses</a>
     </li>
     <li *ngIf="userIsAuthenticated">
       <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Schedule</a>

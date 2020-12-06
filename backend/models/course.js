@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const courseSchema = mongoose.Schema({
-  catalog_nbr: string,
-  subject: string,
-  className: string,
+  catalog_nbr: String,
+  subject: String,
+  className: String,
   course_info: Array
 });
 
-module.exports = mongoose.model('Schedule', courseSchema);
+module.exports = mongoose.model('Course', courseSchema);

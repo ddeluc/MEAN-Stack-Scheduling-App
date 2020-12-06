@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
   name: {type: String, required: true},
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  activated: {type: boolean, required: true }
+  activated: {type: Boolean, required: true }
 });
 
 // Validate emails so that they are unique
