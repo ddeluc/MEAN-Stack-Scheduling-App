@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('', (req, res, next) => {
   Course.find().then(courses => {
     res.status(200).json({
-      message: "Success!"
+      message: "Success!",
+      courses: courses
     })
   });
 })
