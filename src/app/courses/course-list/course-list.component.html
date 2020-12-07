@@ -1,1 +1,61 @@
-<h2>Courses List</h2>
+<h2>Search Courses</h2>
+
+<mat-card>
+  <form (submit)="onSearchKeyword(searchForm)" #onSearchKeyForm="ngForm">
+    <mat-form-field>
+      <input matInput
+      name="keyword"
+      type="text"
+      ngModel
+      minlength="4"
+      placeholder="keyword"
+      required
+      #subjectInput="ngModel">
+      <mat-error *ngIf="subjectInput.invalid">Please a keyword.</mat-error>
+    </mat-form-field>
+    <div>
+      <button
+      mat-raised-button color="accent"
+      type="submit">Search</button>
+    </div>
+  </form>
+</mat-card>
+<div></div>
+<mat-card>
+  <form (submit)="onSearch(searchForm)" #searchForm="ngForm">
+    <mat-form-field>
+      <input matInput
+      name="subject"
+      type="text"
+      ngModel
+      placeholder="subject"
+      required
+      #subjectInput="ngModel">
+      <mat-error *ngIf="subjectInput.invalid">Please enter a subject.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+      name="catalog_nbr"
+      type="text"
+      ngModel
+      placeholder="catalog_nbr"
+      required
+      #codeInput="ngModel">
+      <mat-error *ngIf="codeInput.invalid">Please enter a course code.</mat-error>
+    </mat-form-field>
+    <div>
+      <button
+      mat-raised-button color="accent"
+      type="submit">Search</button>
+    </div>
+  </form>
+</mat-card>
+
+<mat-accordion multi=true *ngIf="courses.length > 0">
+  <mat-expansion-panel *ngFor="let course of courses">
+    <mat-expansion-panel-header>
+      {{ course.subject + " " + course.catalog_nbr }}
+    </mat-expansion-panel-header>
+    <p>{{ course.course_info.days }}</p>
+  </mat-expansion-panel>
+</mat-accordion>

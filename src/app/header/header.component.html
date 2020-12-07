@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <span>
-    <a routerLink="/">MySchedules</a>
+    <a routerLink="/">WesternTimeTable</a>
   </span>
   <span class="spacer"></span>
   <ul>
@@ -8,7 +8,7 @@
       <a mat-button routerLink="/account" routerLinkActive="mat-accent">{{ username }}</a>
     </li>
     <li>
-      <a mat-button routerLinkActive="mat-accent">Courses</a>
+      <a mat-button routerLink="/courses" routerLinkActive="mat-accent">Courses</a>
     </li>
     <li *ngIf="userIsAuthenticated">
       <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Schedule</a>

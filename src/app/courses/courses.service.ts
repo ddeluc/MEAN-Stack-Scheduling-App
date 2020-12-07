@@ -34,6 +34,24 @@ export class CourseService {
     })
   }
 
+  getCourse(subject: string, catalog_nbr: string) {
+    this.http.get<{message: string, course: any}>('http://localhost:3000/api/courses/' + subject + '/' + catalog_nbr)
+    .pipe( map((courseData) => {
+      const updatedCourse = {
+        catalog_nbr: courseData.course.catalog_nbr,
+        subject: courseData.course.subject,
+        className: courseData.course.className,
+        course_info: courseData.course.course_info[0]
+      }
+      return updatedCourse;
+    }))
+    .subscribe((updatedCourseData) => {
+      console.log(updatedCourseData)
+      this.courses = [ updatedCourseData ];
+      this.coursesUpdated.next(this.courses);
+    })
+  }
+
   getCourseUpdateListener() {
     return this.coursesUpdated.asObservable();
   }

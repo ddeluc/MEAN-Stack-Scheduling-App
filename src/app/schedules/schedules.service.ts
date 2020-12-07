@@ -18,15 +18,17 @@ export class SchedulesService {
   getSchedules() {
     this.http.get<{message: string, schedules: any}>('http://localhost:3000/api/schedules')
       .pipe( map((schData) => {
-        return schData.schedules.map((sch: { name: string; courses: number; _id: string; }) => {
+        return schData.schedules.map((sch: { name: string; courses: number; _id: string; creator: string }) => {
           return {
             name: sch.name,
             courses: sch.courses,
-            id: sch._id
+            id: sch._id,
+            creator: sch.creator
           }
         });
       }))
       .subscribe((modSchedules) => {
+        console.log(modSchedules);
         this.schedules = modSchedules;
         this.schedulesUpdated.next([...this.schedules]);
       });

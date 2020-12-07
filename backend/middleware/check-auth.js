@@ -10,7 +10,9 @@ module.exports = (req, res, next) => {
   try {
     // Check for a) and b)
     const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, 'example_secret_for_development_purpose');
+    const decodedToken = jwt.verify(token, 'example_secret_for_development_purpose');
+    // All middlewares running this check will recieve this userdata
+    req.userData = {email: decodedToken.email, userId: decodedToken.userId}
     // Continue with request
     next();
   } catch (error) {

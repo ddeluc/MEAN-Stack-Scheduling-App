@@ -2,6 +2,10 @@ mat-form-field {
   width: 100%;
 }
 
+mat-card {
+  margin-top: 12px;
+}
+
 div {
   margin-top: 10px;
 }

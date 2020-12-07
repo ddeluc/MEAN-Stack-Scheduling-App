@@ -8,7 +8,8 @@ const checkAuth = require("../middleware/check-auth");
 router.post('', checkAuth, (req, res, next) => {
   const schedule = new Schedule({
     name: req.body.name,
-    courses: req.body.courses
+    courses: req.body.courses,
+    creator: req.userData.userId
   });
   schedule.save().then(result => {
     console.log(result._id);
@@ -46,7 +47,7 @@ router.get('',(req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Schedule.findById(req.params.id).then(sch => {
     if (sch) {
-      res.status(200).json(scheule);
+      res.status(200).json(sch);
     } else {
       res.status(404).jason({message: "Schedule not found."});
     };

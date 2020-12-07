@@ -19,6 +19,8 @@ mongoose.connect("mongodb+srv://ddeluc:m7BVWwh2qOWQ2sJj@cluster0.dqio7.mongodb.n
 
 app.use(bodyParser.json());
 
+
+
 // Allow CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
