@@ -28,8 +28,12 @@ router.put('/:id', checkAuth, (req, res, next) => {
     name: req.body.name,
     courses: req.body.courses
   })
-  Schedule.updateOne({_id: req.params.id}, sch).then(result => {
-    res.status(200).json({message: "Updated Schedule."});
+  Schedule.updateOne({ _id: req.params.id, creator: req.userData.userId }, sch).then(result => {
+    if (result.nModified > 0) {
+      res.status(200).json({ message: "Update Successful!"});
+    } else {
+      res.status(401).json({message: "Updated Unsuccessful!"});
+    }
   })
 });
 
@@ -57,7 +61,7 @@ router.get('/:id', (req, res, next) => {
 // Delete a schedule by id (protected)
 router.delete('/:id', checkAuth, (req, res, next) => {
   console.log(req.params.id);
-  Schedule.deleteOne({_id: req.params.id}).then(result => {
+  Schedule.deleteOne({_id: req.params.id, creator: req.userData.userId}).then(result => {
     console.log(result)
     res.status(200).json({message: 'Schedule deleted!'})
   })
