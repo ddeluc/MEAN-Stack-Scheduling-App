@@ -9,7 +9,7 @@ const courseRoutes = require("./routes/course");
 const app = express();
 
 // Connnect to database
-mongoose.connect("mongodb+srv://ddeluc:m7BVWwh2qOWQ2sJj@cluster0.dqio7.mongodb.net/node-angular")
+mongoose.connect("mongodb+srv://ddeluc:m7BVWwh2qOWQ2sJj@cluster0.dqio7.mongodb.net/node-angular?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     console.log('Connected to database!');
   })
@@ -18,8 +18,6 @@ mongoose.connect("mongodb+srv://ddeluc:m7BVWwh2qOWQ2sJj@cluster0.dqio7.mongodb.n
   });
 
 app.use(bodyParser.json());
-
-
 
 // Allow CORS
 app.use((req, res, next) => {

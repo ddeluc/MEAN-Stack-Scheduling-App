@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { CourseService } from 'src/app/courses/courses.service';
 import { Schedule } from '../schedule.model';
-
 import { SchedulesService } from '../schedules.service';
+import { Course } from '../../courses/course.model';
 
 @Component({
   selector: 'app-schedule-create',
@@ -13,10 +15,12 @@ import { SchedulesService } from '../schedules.service';
 export class ScheduleCreateComponent implements OnInit {
   scheduleNameValue = '';
   schedule!: Schedule;
+  addCourses: Array<Course> = [];
   private mode = 'create';
   private scheduleId: string | undefined;
+  private coursesSub: Subscription | undefined;
 
-  constructor(public schedulesService: SchedulesService, public route: ActivatedRoute) {}
+  constructor(public schedulesService: SchedulesService, public courseService: CourseService, public route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -42,10 +46,23 @@ export class ScheduleCreateComponent implements OnInit {
     if (form.invalid)
       return;
     if (this.mode === 'create'){
-      this.schedulesService.addSchedule(form.value.name);
+      this.schedulesService.addSchedule(form.value.name, this.addCourses);
     } else {
-      this.schedulesService.updateSchedule(this.scheduleId!, form.value.name)
+      this.schedulesService.updateSchedule(this.scheduleId!, form.value.name, this.addCourses)
     }
+    this.addCourses = [];
     form.resetForm();
+  }
+
+  onAddCourse(form: NgForm) {
+    if (form.invalid)
+      return;
+    this.coursesSub = this.courseService.getCourseUpdateListener()
+      .subscribe((courses: Course[]) => {
+        courses.forEach(course => {
+          this.addCourses.push(course);
+        });
+      })
+    this.courseService.getCourse(form.value.subject, form.value.catalog_nbr);
   }
 }

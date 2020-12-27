@@ -32,7 +32,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
     if (result.nModified > 0) {
       res.status(200).json({ message: "Update Successful!"});
     } else {
-      res.status(401).json({message: "Updated Unsuccessful!"});
+      res.status(401).json({message: "Not authorized!"});
     }
   })
 });
@@ -63,7 +63,12 @@ router.delete('/:id', checkAuth, (req, res, next) => {
   console.log(req.params.id);
   Schedule.deleteOne({_id: req.params.id, creator: req.userData.userId}).then(result => {
     console.log(result)
-    res.status(200).json({message: 'Schedule deleted!'})
+    if (result.n > 0) {
+      res.status(200).json({message: 'Schedule deleted!'});
+    } else {
+      res.status(401).json({message: "Not authorized!"});
+    }
+
   })
   .catch(err => {
     console.log("Failed to delete schedule.")

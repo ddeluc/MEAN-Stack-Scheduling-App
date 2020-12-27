@@ -1,4 +1,37 @@
 <mat-card>
+  <form (submit)="onAddCourse(searchForm)" #searchForm="ngForm">
+    <mat-form-field>
+      <input matInput
+      name="subject"
+      type="text"
+      ngModel
+      placeholder="subject"
+      required
+      #subjectInput="ngModel">
+      <mat-error *ngIf="subjectInput.invalid">Please enter a subject.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+      name="catalog_nbr"
+      type="text"
+      ngModel
+      placeholder="catalog_nbr"
+      required
+      #codeInput="ngModel">
+      <mat-error *ngIf="codeInput.invalid">Please enter a course code.</mat-error>
+    </mat-form-field>
+    <div>
+      <button
+      mat-raised-button color="accent"
+      type="submit">Add Course</button>
+    </div>
+  </form>
+  <div *ngFor="let course of addCourses">
+    {{ course.subject }}
+  </div>
+</mat-card>
+<div></div>
+<mat-card>
   <form (submit)="onSaveSchedule(scheduleForm)" #scheduleForm="ngForm">
     <mat-form-field>
       <input matInput

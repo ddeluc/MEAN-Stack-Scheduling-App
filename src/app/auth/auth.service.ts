@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   createUser(name: string, email: string, password: string, activated: boolean) {
+    console.log("Trying to create user ...");
     const user = {
       name: name,
       email: email,

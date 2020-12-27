@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Create a new user (not protected)
 router.post("/signup", (req, res, next) => {
+  console.log("Still trying to create user ...");
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({

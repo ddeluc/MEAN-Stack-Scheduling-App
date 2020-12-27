@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const scheduleSchema = mongoose.Schema({
   name: { type: String },
-  courses: { type: Number },
+  courses: { type: Array },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
 

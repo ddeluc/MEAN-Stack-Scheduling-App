@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators'
+import { Course } from '../courses/course.model'
 
 import { Schedule } from './schedule.model';
 
@@ -42,11 +43,11 @@ export class SchedulesService {
     return this.http.get<{_id: string, name: string, courses: number}>("http://localhost:3000/api/schedules/" + id);
   }
 
-  addSchedule(name: string) {
+  addSchedule(name: string, courses: Array<Course>) {
     const schedule: Schedule = {
       id: "",
       name: name,
-      courses: 0
+      courses: courses
     };
     this.http.post<{message: string, schId: string}>('http://localhost:3000/api/schedules', schedule)
       .subscribe((responseData) => {
@@ -57,8 +58,8 @@ export class SchedulesService {
       });
   }
 
-  updateSchedule(id: string, schName: string) {
-    const schedule: Schedule = { id: id, name: schName, courses: 0};
+  updateSchedule(id: string, schName: string, courses: Array<Course>) {
+    const schedule: Schedule = { id: id, name: schName, courses: courses };
     this.http.put("http://localhost:3000/api/schedules/" + id, schedule)
       .subscribe(response => {
         const updatedSchedules = [...this.schedules];
