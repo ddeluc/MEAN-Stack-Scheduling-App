@@ -17,7 +17,12 @@ router.post('', checkAuth, (req, res, next) => {
     res.status(201).json({
       message: 'Added Successfully',
       schId: result._id
-    });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Creating a schedule failed."
+      })
+    })
   });
 });
 
@@ -34,6 +39,11 @@ router.put('/:id', checkAuth, (req, res, next) => {
     } else {
       res.status(401).json({message: "Not authorized!"});
     }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Could not update schedule."
+    })
   })
 });
 

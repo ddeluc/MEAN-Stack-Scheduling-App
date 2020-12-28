@@ -27,7 +27,7 @@ router.post("/signup", (req, res, next) => {
         })
         .catch(err => {
           res.status(500).json({
-            error: err
+            message: "Invalid authentication credentials!"
           });
         });
     });
@@ -39,7 +39,7 @@ router.post('/login', (req, res, next) => {
   User.findOne({ email: req.body.email }).then(user => {
       if (!user) {
         return res.status(401).json({
-          message: "Auth failed."
+          message: "Authentication failed!"
         });
       }
       // Compare the user password to the one in the database that matches the email
@@ -52,7 +52,7 @@ router.post('/login', (req, res, next) => {
       if (!result) {
         // Return is used to end execution
         return res.status(401).json({
-          message: "Auth failed."
+          message: "Authentication failed!"
         });
       }
       // Creates new web token (payload, secret, options)
@@ -71,7 +71,7 @@ router.post('/login', (req, res, next) => {
     // Error
     .catch(err => {
       return res.status(401).json({
-        message: "Auth failed."
+        message: "Invalid authentication credentials!"
       })
     })
 });
