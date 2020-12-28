@@ -36,5 +36,8 @@
       mat-raised-button color="accent"
       type="submit">Signup</button>
     </div>
+    <div>
+      <mat-checkbox class="checkbox" [(ngModel)]="isAdmin" [ngModelOptions]="{standalone: true}" >Admin</mat-checkbox>
+    </div>
   </form>
 </mat-card>

@@ -32,18 +32,22 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(name: string, email: string, password: string, activated: boolean) {
+  createUser(name: string, email: string, password: string, activated: boolean, admin: boolean) {
     console.log("Trying to create user ...");
     const user = {
       name: name,
       email: email,
       password: password,
-      activated: activated
+      activated: activated,
+      admin: admin
     };
     this.http.post('http://localhost:3000/api/user/signup', user)
       .subscribe(response => {
+        this.router.navigate(['/']);
         console.log(response);
-      })
+      }, error => {
+        console.log(error);
+      });
   }
 
   getUsername() {
@@ -71,6 +75,8 @@ export class AuthService {
           // Navigate to the homepage
           this.router.navigate(['/']);
         }
+      }, error => {
+        console.log(error);
       })
   }
 

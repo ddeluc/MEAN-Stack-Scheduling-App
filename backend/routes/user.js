@@ -15,7 +15,8 @@ router.post("/signup", (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: hash,
-        activated: true
+        activated: true,
+        admin: req.body.admin
       })
       user.save()
         .then(result => {
@@ -67,7 +68,7 @@ router.post('/login', (req, res, next) => {
         name: fetchedUser.name
       });
     })
-    // Errpr
+    // Error
     .catch(err => {
       return res.status(401).json({
         message: "Auth failed."
