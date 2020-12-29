@@ -44,6 +44,14 @@
       #name="ngModel">
       <mat-error *ngIf="name.invalid">Please enter a schedule name.</mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <input matInput
+      name="description"
+      type="text"
+      ngModel
+      placeholder="description"
+      #codeInput="ngModel">
+    </mat-form-field>
     <div>
       <button
       mat-raised-button color="accent"

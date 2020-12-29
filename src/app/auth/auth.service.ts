@@ -13,6 +13,7 @@ export class AuthService {
   private authStatusListener = new Subject<{isAuth: boolean, username: string}>();
   private tokenTimer: any;
   private username: string | undefined;
+  private isActivated: string | undefined;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -56,8 +57,9 @@ export class AuthService {
 
   login(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
-    this.http.post<{ token: string, expiresIn: number, name: string }>('http://localhost:3000/api/user/login', authData)
+    this.http.post<{ token: string, expiresIn: number, name: string, activated: string }>('http://localhost:3000/api/user/login', authData)
       .subscribe(response => {
+        console.log(response);
         const token = response.token;
         this.token = token;
         if (token) {
@@ -65,12 +67,13 @@ export class AuthService {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
+          this.isActivated = response.activated;
           const status = {isAuth: true, username: response.name};
           this.authStatusListener.next(status);
           // Save the data in the browser for only a period of time
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(response.name, token, expirationDate);
+          this.saveAuthData(response.name, token, expirationDate, response.activated);
           console.log(expirationDate);
           // Navigate to the homepage
           this.router.navigate(['/']);
@@ -116,7 +119,8 @@ export class AuthService {
   }
 
   // Store token in local storage (browser storage)
-  private saveAuthData(username: string, token: string, expirationDate: Date) {
+  private saveAuthData(username: string, token: string, expirationDate: Date, activated: string) {
+    localStorage.setItem('status', activated);
     localStorage.setItem('username', username);
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
@@ -124,6 +128,7 @@ export class AuthService {
 
   // Remove token from local storage (browser storage)
   private clearAuthData() {
+    localStorage.removeItem('status');
     localStorage.removeItem('username');
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");

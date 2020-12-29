@@ -8,6 +8,8 @@ const checkAuth = require("../middleware/check-auth");
 router.post('', checkAuth, (req, res, next) => {
   const schedule = new Schedule({
     name: req.body.name,
+    author: req.body.author,
+    description: req.body.description,
     courses: req.body.courses,
     creator: req.userData.userId
   });
