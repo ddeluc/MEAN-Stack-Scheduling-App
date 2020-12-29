@@ -28,7 +28,11 @@ export class CourseListComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.coursesService.getCourses();
+    this.coursesService.getCourses(form.value.keyword);
+    console.log(form.value.keyword);
+    // keyword = keyword.toUpperCase();
+    // this.courses = this.courses.filter(course => course.subject.includes(keyword) || course.catalog_nbr.includes(keyword));
+    // console.log(this.courses);
   }
 
   onSearch(form: NgForm) {

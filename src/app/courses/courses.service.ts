@@ -15,7 +15,7 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  getCourses() {
+  getCourses(keyword: string) {
     this.http.get<{message: string, courses: any}>('http://localhost:3000/api/courses')
     .pipe( map((courseData) => {
       return courseData.courses.map((cou: { catalog_nbr: string, subject: string, className: string, course_info: Array<CourseInfo>, _id: string }) => {
@@ -26,12 +26,19 @@ export class CourseService {
           course_info: cou.course_info[0]
         };
         return course;
-      });
+      })
+      .filter((course: any) => course.subject.includes(keyword) || course.catalog_nbr.includes(keyword));
     }))
     .subscribe((updatedCourseData) => {
       this.courses = updatedCourseData;
       this.coursesUpdated.next(updatedCourseData);
     })
+  }
+
+  getCoursesFromKey(keyword: string) {
+    const updatedCourses = this.courses.filter(course => course.subject.includes(keyword) || course.catalog_nbr.includes(keyword));
+    this.courses = updatedCourses;
+    this.coursesUpdated.next(updatedCourses);
   }
 
   getCourse(subject: string, catalog_nbr: string) {
