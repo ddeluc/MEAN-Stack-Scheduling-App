@@ -28,7 +28,11 @@ export class CourseListComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.coursesService.getCourses(form.value.keyword);
+    // soft-match
+    let keyword = form.value.keyword;
+    keyword = keyword.toUpperCase();
+    keyword = keyword.replaceAll(/\s/g, '')
+    this.coursesService.getCourses(keyword);
     console.log(form.value.keyword);
     // keyword = keyword.toUpperCase();
     // this.courses = this.courses.filter(course => course.subject.includes(keyword) || course.catalog_nbr.includes(keyword));
@@ -39,7 +43,14 @@ export class CourseListComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.coursesService.getCourse(form.value.subject, form.value.catalog_nbr);
+    // soft-match
+    let subject = form.value.subject;
+    subject = subject.toUppperCase();
+    subject = subject.replaceAll(/\s/g, '');
+    let catalog_nbr = form.value.subject;
+    catalog_nbr = catalog_nbr.toUppperCase();
+    catalog_nbr = catalog_nbr.replaceAll(/\s/g, '');
+    this.coursesService.getCourse(subject, catalog_nbr);
   }
 }
 

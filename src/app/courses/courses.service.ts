@@ -27,7 +27,7 @@ export class CourseService {
         };
         return course;
       })
-      .filter((course: any) => course.subject.includes(keyword) || course.catalog_nbr.includes(keyword));
+      .filter((course: any) => course.className.includes(keyword) || course.catalog_nbr.includes(keyword));
     }))
     .subscribe((updatedCourseData) => {
       this.courses = updatedCourseData;

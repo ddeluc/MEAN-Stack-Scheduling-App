@@ -22,6 +22,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.username = isAuthenticated.username;
         this.userIsAuthenticated = isAuthenticated.isAuth;
       });
+    if (localStorage.getItem("username")) {
+      this.username = localStorage.getItem("username")!;
+    }
   }
 
   onLogout() {
