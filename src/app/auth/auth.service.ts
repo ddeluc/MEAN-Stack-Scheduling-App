@@ -11,6 +11,7 @@ export class AuthService {
   private isAuthenticated = false;
   private token: string | undefined;
   private authStatusListener = new Subject<{isAuth: boolean, username: string}>();
+  private adminStatusUpdated = new Subject<{adminStatus: boolean}>();
   private usersUpdated = new Subject<{users: any}>();
   private users: any;
   private tokenTimer: any;
@@ -33,6 +34,10 @@ export class AuthService {
   // the subscribers will be notified.
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
+  }
+
+  adminStatusListener() {
+    return this.adminStatusUpdated.asObservable();
   }
 
   createUser(name: string, email: string, password: string, activated: boolean, admin: boolean) {
@@ -84,6 +89,8 @@ export class AuthService {
           this.isAuthenticated = true;
           this.isActivated = response.activated;
           const status = {isAuth: true, username: response.name};
+          const adminUpdate = {adminStatus: response.admin};
+          this.adminStatusUpdated.next(adminUpdate);
           this.authStatusListener.next(status);
           // Save the data in the browser for only a period of time
           const now = new Date();
@@ -119,6 +126,7 @@ export class AuthService {
     this.token = undefined;
     this.isAuthenticated = false;
     this.authStatusListener.next({isAuth: false, username: this.username!});
+    this.adminStatusUpdated.next({adminStatus: false});
     this.router.navigate(['/']);
     this.clearAuthData();
     // Clear timeout timer once logged out

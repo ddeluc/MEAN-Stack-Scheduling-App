@@ -1,6 +1,6 @@
 <mat-card>
   <form (submit)="onUpdatePassword(updateForm)" #updateForm="ngForm">
-    <a>Activated Status</a>
+    <a>Update Password</a>
     <mat-form-field>
       <input matInput
       name="password"
@@ -18,17 +18,18 @@
     </div>
   </form>
 </mat-card>
-
-<!-- <mat-accordion multi=true *ngIf="schedules.length > 0">
-  <mat-expansion-panel *ngFor="let schedule of schedules">
-    <mat-expansion-panel-header>
-      <b>{{ schedule.name}}</b> &nbsp; by {{ schedule.author }}
-    </mat-expansion-panel-header>
-    <p *ngFor="let course of schedule.courses">{{ course.subject + " " + course.catalog_nbr + ": " + course.course_info.start_time + " " + course.course_info.end_time}}</p>
-    <mat-action-row *ngIf="userIsAuthenticated">
-      <a mat-button color="primary" [routerLink]="['/edit', schedule.id]">Edit</a>
-      <button mat-button color="warn" (click)="onDelete(schedule.id)">Delete</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-<p class="mat-body-1" *ngIf="schedules.length <= 0">No schedules added.</p> -->
+<div></div>
+<div *ngIf="isAdmin">
+  <mat-accordion multi=true *ngIf="users.length > 0">
+    <mat-expansion-panel *ngFor="let user of users">
+      <mat-expansion-panel-header>
+        <b>{{ user.name}}</b>
+      </mat-expansion-panel-header>
+      {{ user.email}}
+      <mat-action-row>
+        <mat-checkbox class="checkbox" [(ngModel)]="isAdmin" [ngModelOptions]="{standalone: true}">Active</mat-checkbox>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <p class="mat-body-1" *ngIf="users.length <= 0">No schedules added.</p>
+</div>
