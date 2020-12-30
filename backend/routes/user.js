@@ -33,6 +33,15 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
+router.get('',(req, res, next) => {
+  User.find().then(documents => {
+    res.status(200).json({
+      message: 'Success!',
+      users: documents
+    });
+  });
+});
+
 // Login user (not protected)
 router.post('/login', (req, res, next) => {
   let fetchedUser;
@@ -45,6 +54,12 @@ router.post('/login', (req, res, next) => {
       // Compare the user password to the one in the database that matches the email
       // Returns a Promise, result will be true or false
       fetchedUser = user;
+      console.log(fetchedUser.activated);
+      if (!fetchedUser.activated) {
+        return res.status(401).json({
+          message: "This account has been dactivated. Please contact the administrator."
+        });
+      }
       return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
@@ -66,7 +81,8 @@ router.post('/login', (req, res, next) => {
         token: token,
         expiresIn: 3600,
         name: fetchedUser.name,
-        activated: fetchedUser.activated ? 'Activated' : 'Deactivated'
+        activated: fetchedUser.activated ? 'Activated' : 'Deactivated',
+        admin: fetchedUser.admin
       });
     })
     // Error

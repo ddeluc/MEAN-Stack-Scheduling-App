@@ -49,7 +49,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
   })
 });
 
-// Get add schedules (not protected)
+// Get all schedules (not protected)
 router.get('',(req, res, next) => {
   Schedule.find().then(documents => {
     res.status(200).json({

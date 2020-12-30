@@ -11,6 +11,8 @@ export class AuthService {
   private isAuthenticated = false;
   private token: string | undefined;
   private authStatusListener = new Subject<{isAuth: boolean, username: string}>();
+  private usersUpdated = new Subject<{users: any}>();
+  private users: any;
   private tokenTimer: any;
   private username: string | undefined;
   private isActivated: string | undefined;
@@ -51,13 +53,26 @@ export class AuthService {
       });
   }
 
+  getUsers() {
+    console.log("Getting users ...")
+    this.http.get<{ message: string, users: any}>('http://localhost:3000/api/user')
+      .subscribe((response) => {
+        this.users = response.users;
+        this.usersUpdated.next(response.users);
+      })
+  }
+
+  getUsersListener() {
+    return this.usersUpdated.asObservable();
+  }
+
   getUsername() {
     return this.username;
   }
 
   login(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
-    this.http.post<{ token: string, expiresIn: number, name: string, activated: string }>('http://localhost:3000/api/user/login', authData)
+    this.http.post<{ token: string, expiresIn: number, name: string, activated: string, admin: boolean }>('http://localhost:3000/api/user/login', authData)
       .subscribe(response => {
         console.log(response);
         const token = response.token;
@@ -73,7 +88,7 @@ export class AuthService {
           // Save the data in the browser for only a period of time
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(response.name, token, expirationDate, response.activated);
+          this.saveAuthData(response.name, token, expirationDate, response.activated, response.admin);
           console.log(expirationDate);
           // Navigate to the homepage
           this.router.navigate(['/']);
@@ -119,11 +134,12 @@ export class AuthService {
   }
 
   // Store token in local storage (browser storage)
-  private saveAuthData(username: string, token: string, expirationDate: Date, activated: string) {
+  private saveAuthData(username: string, token: string, expirationDate: Date, activated: string, admin: boolean) {
     localStorage.setItem('status', activated);
     localStorage.setItem('username', username);
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
+    localStorage.setItem('admin', admin ? 'yes' : 'no');
   }
 
   // Remove token from local storage (browser storage)
@@ -132,6 +148,7 @@ export class AuthService {
     localStorage.removeItem('username');
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
+    localStorage.removeItem('admin');
   }
 
   // Read the token and exp. date from the browser storage
