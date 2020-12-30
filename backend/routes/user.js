@@ -33,6 +33,27 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
+// Update a schedule
+router.put('/:id', (req, res, next) => {
+  const user = new User({
+    _id: req.params.id,
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    activated: req.body.activated,
+    admin: req.body.admin
+  })
+  User.updateOne({ _id: req.params.id}, user).then(result => {
+    res.status(200).json({ message: "Update Successful!"});
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).json({
+      message: "Could not update user."
+    })
+  })
+});
+
 router.get('',(req, res, next) => {
   User.find().then(documents => {
     res.status(200).json({

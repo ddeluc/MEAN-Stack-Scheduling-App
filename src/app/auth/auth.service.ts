@@ -58,6 +58,15 @@ export class AuthService {
       });
   }
 
+  updateUser(id: string, name: string, email: string, password: string, activated: boolean, admin: boolean) {
+    const user = {name: name, email: email, password: password, activated: activated, admin: admin};
+    this.http.put('http://localhost:3000/api/user/' + id, user)
+      .subscribe((response) => {
+        console.log("Updated users.");
+        console.log(response);
+      })
+  }
+
   getUsers() {
     console.log("Getting users ...")
     this.http.get<{ message: string, users: any}>('http://localhost:3000/api/user')

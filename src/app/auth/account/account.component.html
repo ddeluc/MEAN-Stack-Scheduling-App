@@ -27,9 +27,17 @@
       </mat-expansion-panel-header>
       {{ user.email}}
       <mat-action-row>
-        <mat-checkbox class="checkbox" [(ngModel)]="isAdmin" [ngModelOptions]="{standalone: true}">Active</mat-checkbox>
+        <mat-checkbox class="checkbox" [(ngModel)]="user.activated" [ngModelOptions]="{standalone: true}">Active</mat-checkbox>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
   <p class="mat-body-1" *ngIf="users.length <= 0">No schedules added.</p>
 </div>
+<div>
+  <button
+  mat-raised-button color="accent"
+  (click)="onSave()"
+  type="submit">Save Changes</button>
+</div>
+
+<!-- (submit)="onLogin(LoginForm)" -->

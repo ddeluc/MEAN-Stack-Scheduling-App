@@ -45,11 +45,11 @@ export class CourseListComponent implements OnInit {
     }
     // soft-match
     let subject = form.value.subject;
-    subject = subject.toUppperCase();
-    subject = subject.replaceAll(/\s/g, '');
-    let catalog_nbr = form.value.subject;
-    catalog_nbr = catalog_nbr.toUppperCase();
-    catalog_nbr = catalog_nbr.replaceAll(/\s/g, '');
+    // subject = subject.toUppperCase();
+    // subject = subject.replaceAll(/\s/g, '');
+    let catalog_nbr = form.value.catalog_nbr;
+    // catalog_nbr = catalog_nbr.toUppperCase();
+    // catalog_nbr = catalog_nbr.replaceAll(/\s/g, '');
     this.coursesService.getCourse(subject, catalog_nbr);
   }
 }

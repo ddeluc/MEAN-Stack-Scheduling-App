@@ -23,6 +23,12 @@ export class AccountComponent implements OnInit {
     this.isAdmin = localStorage.getItem('admin') == 'yes' ? true : false;
   }
 
+  onSave() {
+    this.users.forEach((user: any) => {
+      this.authService.updateUser(user._id, user.name, user.email, user.password, user.activated, user.admin);
+    });
+  }
+
   onUpdatePassword(form: NgForm) {
     this.authService.getUsers();
     this.usersSub = this.authService.getUsersListener()
