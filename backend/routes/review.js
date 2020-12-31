@@ -11,7 +11,8 @@ router.post('', checkAuth, (req, res, next) => {
     author: req.body.author,
     title: req.body.title,
     content: req.body.content,
-    flag: false
+    flag: false,
+    courseId: req.body.courseId
   });
   review.save().then(result => {
     res.status(201).json({

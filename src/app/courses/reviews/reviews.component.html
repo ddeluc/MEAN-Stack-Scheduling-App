@@ -1,5 +1,7 @@
+<h1>{{ courseInfo.subject + " " + courseInfo.catalog_nbr}}</h1>
 <mat-card>
   <form (submit)="onAddReview(reviewForm)" #reviewForm="ngForm">
+    <h3>Write a Review</h3>
     <mat-form-field>
       <input
         matInput
@@ -33,12 +35,11 @@
 <div></div>
 <div>
   <mat-accordion multi=true *ngIf="reviews.length > 0">
-    <mat-expansion-panel *ngFor="let review of reviews">
+    <mat-expansion-panel *ngFor="let review of courseReviews">
       <mat-expansion-panel-header>
         <b>"{{ review.title }}"</b> &nbsp; by {{ review.author }}
       </mat-expansion-panel-header>
       <a>{{ review.content }}</a>
     </mat-expansion-panel>
   </mat-accordion>
-  <p class="mat-body-1" *ngIf="reviews.length <= 0">No reviews added.</p>
 </div>

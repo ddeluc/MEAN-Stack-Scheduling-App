@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'account', component: AccountComponent },
   { path: 'courses', component: CourseListComponent },
-  { path: 'review/:courseId', component: ReviewsComponent, canActivate: [AuthGuard] }
+  { path: 'review/:courseId/:subject/:catalog_nbr', component: ReviewsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

@@ -58,7 +58,7 @@
     </mat-expansion-panel-header>
     <p>{{ course.course_info.days }}</p>
     <mat-action-row>
-      <a mat-button color="primary" [routerLink]="['/review', course.id]">Reviews</a>
+      <a mat-button color="primary" [routerLink]="['/review', course.id, course.subject, course.catalog_nbr]">Reviews</a>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
