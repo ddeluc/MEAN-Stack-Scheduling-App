@@ -16,6 +16,7 @@ export class ReviewsComponent implements OnInit {
   constructor(private reviewsService: ReviewsService) {}
 
   ngOnInit() {
+    this.reviewsService.getReviews();
     this.reviewsUpdatedSub = this.reviewsService.getReviewsListener()
       .subscribe((reviews: Review[]) => {
         this.reviews = reviews;
@@ -24,6 +25,8 @@ export class ReviewsComponent implements OnInit {
   }
 
   onAddReview(form: NgForm) {
+    if (form.invalid)
+      return;
     const title = form.value.title;
     const content = form.value.content;
     this.reviewsService.addReview(localStorage.getItem('username')!, title, content);

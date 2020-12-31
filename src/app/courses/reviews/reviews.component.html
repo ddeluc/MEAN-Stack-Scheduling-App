@@ -21,7 +21,7 @@
         required
         placeholder="Review Content"
         #content="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please enter a review title.</mat-error>
+      <mat-error *ngIf="content.invalid">Please enter review content.</mat-error>
     </mat-form-field>
     <div></div>
     <button
@@ -30,3 +30,15 @@
       type="submit" >Save Review</button>
   </form>
 </mat-card>
+<div></div>
+<div>
+  <mat-accordion multi=true *ngIf="reviews.length > 0">
+    <mat-expansion-panel *ngFor="let review of reviews">
+      <mat-expansion-panel-header>
+        <b>"{{ review.title }}"</b> &nbsp; by {{ review.author }}
+      </mat-expansion-panel-header>
+      <a>{{ review.content }}</a>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <p class="mat-body-1" *ngIf="reviews.length <= 0">No reviews added.</p>
+</div>

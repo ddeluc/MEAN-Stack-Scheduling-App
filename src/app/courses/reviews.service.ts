@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { map } from "rxjs/operators";
 import { Review } from "./review.model";
 
 @Injectable({
@@ -24,6 +25,25 @@ export class ReviewsService {
         console.log(responseData.message);
         review.id = responseData.revId;
         this.reviews.push(review);
+        this.reviewsUpdated.next([...this.reviews]);
+      });
+  }
+
+  getReviews() {
+    this.http.get<{message: string, reviews: any}>('http://localhost:3000/api/review')
+      .pipe( map((revData) => {
+        return revData.reviews.map((rev: { _id: string; author: string; title: string; content: string; flag: boolean; }) => {
+          return {
+            id: rev._id,
+            author: rev.author,
+            title: rev.title,
+            content: rev.content,
+            flag: rev.flag
+          }
+        });
+      }))
+      .subscribe((modReviews) => {
+        this.reviews = modReviews;
         this.reviewsUpdated.next([...this.reviews]);
       });
   }

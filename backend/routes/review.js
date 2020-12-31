@@ -3,6 +3,7 @@ const express = require("express");
 
 const router = express.Router();
 const checkAuth = require("../middleware/check-auth");
+const user = require('../models/user');
 
 // Create review
 router.post('', checkAuth, (req, res, next) => {
@@ -21,6 +22,15 @@ router.post('', checkAuth, (req, res, next) => {
       res.status(500).json({
         message: "Creating a review failed."
       })
+    });
+  });
+});
+
+router.get('',(req, res, next) => {
+  Review.find().then(documents => {
+    res.status(200).json({
+      message: 'Success!',
+      reviews: documents
     });
   });
 });
