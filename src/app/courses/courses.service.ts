@@ -20,6 +20,7 @@ export class CourseService {
     .pipe( map((courseData) => {
       return courseData.courses.map((cou: { catalog_nbr: string, subject: string, className: string, course_info: Array<CourseInfo>, _id: string }) => {
         const course: Course = {
+          id: cou._id,
           catalog_nbr: cou.catalog_nbr,
           subject: cou.subject,
           className: cou.className,
@@ -45,6 +46,7 @@ export class CourseService {
     this.http.get<{message: string, course: any}>('http://localhost:3000/api/courses/' + subject + '/' + catalog_nbr)
     .pipe( map((courseData) => {
       const updatedCourse = {
+        id: courseData.course._id,
         catalog_nbr: courseData.course.catalog_nbr,
         subject: courseData.course.subject,
         className: courseData.course.className,

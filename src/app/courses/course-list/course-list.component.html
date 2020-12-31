@@ -57,5 +57,10 @@
       {{ course.subject + " " + course.catalog_nbr }}
     </mat-expansion-panel-header>
     <p>{{ course.course_info.days }}</p>
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['/review', course.id]">Reviews</a>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
+
+<!--[routerLink]="['/edit', schedule.id]"-->

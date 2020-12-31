@@ -33,7 +33,7 @@
   </mat-accordion>
   <p class="mat-body-1" *ngIf="users.length <= 0">No schedules added.</p>
 </div>
-<div>
+<div *ngIf="isAdmin">
   <button
   mat-raised-button color="accent"
   (click)="onSave()"

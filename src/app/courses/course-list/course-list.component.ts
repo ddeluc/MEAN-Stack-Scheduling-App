@@ -5,6 +5,7 @@ import { Subscribable, Subscription } from 'rxjs';
 import { Course } from '../course.model';
 import { CourseInfo } from '../courseInfo.model';
 import { CourseService } from '../courses.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: "app-course-list",
@@ -12,16 +13,22 @@ import { CourseService } from '../courses.service';
   styleUrls: ['./course-list.component.css']
 })
 export class CourseListComponent implements OnInit {
+  userIsAuthenticated = false;
+  private authListenerSub: Subscription | undefined;
   courses: Array<Course> = [];
   private coursesSub: Subscription | undefined;
 
-  constructor(public coursesService: CourseService) {}
+  constructor(public coursesService: CourseService, private authService: AuthService) {}
 
   ngOnInit() {
     this.coursesSub = this.coursesService.getCourseUpdateListener()
       .subscribe((updatedCourses) => {
         this.courses = updatedCourses;
       })
+    this.authListenerSub = this.authService.getAuthStatusListener()
+      .subscribe((result) => {
+        this.userIsAuthenticated = result.isAuth;
+      });
   }
 
   onSearchKeyword(form: NgForm) {

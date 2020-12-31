@@ -24,6 +24,7 @@ import { AccountComponent } from './auth/account/account.component';
 import { CourseListComponent } from './courses/course-list/course-list.component';
 import { ErrorInterceptor } from './error.interceptor';
 import { ErrorComponent } from './error/error.component';
+import { ReviewsComponent } from './courses/reviews/reviews.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ErrorComponent } from './error/error.component';
     SignupComponent,
     AccountComponent,
     CourseListComponent,
-    ErrorComponent
+    ErrorComponent,
+    ReviewsComponent
   ],
   imports: [
     BrowserModule,

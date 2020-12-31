@@ -5,6 +5,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup';
 import { CourseListComponent } from './courses/course-list/course-list.component';
+import { ReviewsComponent } from './courses/reviews/reviews.component';
 import { ScheduleCreateComponent } from './schedules/schedule-create/schedule-create.component';
 import { ScheduleListComponent } from './schedules/schedule-list/schedule-list.component';
 
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'account', component: AccountComponent },
-  { path: 'courses', component: CourseListComponent }
+  { path: 'courses', component: CourseListComponent },
+  { path: 'review/:courseId', component: ReviewsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
