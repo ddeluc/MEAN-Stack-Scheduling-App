@@ -30,8 +30,8 @@ export class ScheduleCreateComponent implements OnInit {
         if (data !== null)
           this.scheduleId = data;
           console.log(this.scheduleId);
-          this.schedulesService.getSchedule(this.scheduleId!).subscribe((schedule: { _id: any; name: any; courses: any; }) => {
-            this.schedule = {id: schedule._id, description: '', author: localStorage.getItem("username")!, name: schedule.name, courses: schedule.courses};
+          this.schedulesService.getSchedule(this.scheduleId!).subscribe((schedule: { _id: any; name: any; courses: any; date: {date: Date; seconds: number; }; } ) => {
+            this.schedule = {id: schedule._id, description: '', author: localStorage.getItem("username")!, name: schedule.name, courses: schedule.courses, date: schedule.date };
           });
         this.mode = 'edit';
       } else {
@@ -51,7 +51,9 @@ export class ScheduleCreateComponent implements OnInit {
       this.schedulesService.addSchedule(author, form.value.description, form.value.name, this.addCourses);
 
     } else {
-      this.schedulesService.updateSchedule(this.scheduleId!, localStorage.getItem("username")!, form.value.description, form.value.name, this.addCourses)
+      const now = new Date();
+      const seconds = now.getTime();
+      this.schedulesService.updateSchedule(this.scheduleId!, localStorage.getItem("username")!, form.value.description, form.value.name, this.addCourses, {date: now, seconds: seconds});
     }
     this.addCourses = [];
     form.resetForm();

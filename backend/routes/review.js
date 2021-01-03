@@ -36,4 +36,20 @@ router.get('',(req, res, next) => {
   });
 });
 
+router.put('/:id', (req, res, next) => {
+  const rev = new Review({
+    _id: req.body.id,
+    flag: req.body.flag,
+    title: req.body.title
+  })
+  Review.updateOne({ _id: req.params.id }, rev).then(result => {
+    res.status(200).json({ message: "Update Successful!"});
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Could not update schedule."
+    })
+  })
+});
+
 module.exports = router;

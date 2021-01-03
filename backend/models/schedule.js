@@ -5,7 +5,8 @@ const scheduleSchema = mongoose.Schema({
   description: { type: String, required: false},
   name: { type: String, required: true },
   courses: { type: Array, required: true },
-  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  date: { type: { date: Date, seconds: Number } }
 });
 
 module.exports = mongoose.model('Schedule', scheduleSchema);

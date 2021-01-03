@@ -11,7 +11,8 @@ router.post('', checkAuth, (req, res, next) => {
     author: req.body.author,
     description: req.body.description,
     courses: req.body.courses,
-    creator: req.userData.userId
+    creator: req.userData.userId,
+    date: req.body.date
   });
   schedule.save().then(result => {
     console.log(result._id);
@@ -33,7 +34,8 @@ router.put('/:id', checkAuth, (req, res, next) => {
   const sch = new Schedule({
     _id: req.body.id,
     name: req.body.name,
-    courses: req.body.courses
+    courses: req.body.courses,
+    date: req.body.date
   })
   Schedule.updateOne({ _id: req.params.id, creator: req.userData.userId }, sch).then(result => {
     if (result.nModified > 0) {

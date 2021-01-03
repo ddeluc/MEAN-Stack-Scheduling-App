@@ -14,6 +14,7 @@ export class ReviewsComponent implements OnInit {
   courseReviews: Review[] = [];
   reviewsUpdatedSub: Subscription | undefined;
   courseInfo: {id: string, subject: string, catalog_nbr: string} | undefined;
+  isAdmin = localStorage.getItem('admin') == 'yes' ? true : false;
 
   constructor(private reviewsService: ReviewsService, public route: ActivatedRoute) {}
 
@@ -33,6 +34,7 @@ export class ReviewsComponent implements OnInit {
     this.reviewsUpdatedSub = this.reviewsService.getReviewsListener()
       .subscribe((reviews: Review[]) => {
         this.reviews = reviews;
+        console.log(this.reviews);
         while(this.courseReviews.length > 0) {
           this.courseReviews.pop();
         }
@@ -49,5 +51,11 @@ export class ReviewsComponent implements OnInit {
     const title = form.value.title;
     const content = form.value.content;
     this.reviewsService.addReview(localStorage.getItem('username')!, title, content, this.courseInfo!.id);
+  }
+
+  onSave() {
+    this.courseReviews.forEach((review: any) => {
+      this.reviewsService.updateReview(review.id, review.flag);
+    });
   }
 }

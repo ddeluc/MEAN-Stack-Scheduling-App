@@ -24,7 +24,7 @@ export class ScheduleListComponent implements OnInit, OnDestroy {
     this.schedulesService.getSchedules();
     this.schedulesSub = this.schedulesService.getScheduleUpdateListener()
       .subscribe((schedules: Schedule[]) => {
-        this.schedules = schedules;
+        this.schedules = schedules.sort((a, b) => b.date.seconds - a.date.seconds);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService.getAuthStatusListener()

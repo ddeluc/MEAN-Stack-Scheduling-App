@@ -7,4 +7,5 @@ export interface Schedule {
   id: string;
   name: string;
   courses: Array<Course>;
+  date: { date: Date; seconds: number};
 }

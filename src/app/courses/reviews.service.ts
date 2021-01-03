@@ -21,7 +21,8 @@ export class ReviewsService {
       author: author,
       title: title,
       content: content,
-      courseId: courseId
+      courseId: courseId,
+      flag: false
     };
     this.http.post<{message: string, revId: string}>('http://localhost:3000/api/review', review)
       .subscribe((responseData) => {
@@ -51,6 +52,14 @@ export class ReviewsService {
         this.reviewsUpdated.next([...this.reviews]);
       });
   }
+
+  updateReview(id: string, flag: boolean) {
+    const rev = {flag: flag};
+    this.http.put('http://localhost:3000/api/review/' + id, rev).subscribe((response) => {
+      console.log("Updated users.");
+      console.log(response);
+    })
+  };
 
   getReviewsListener() {
     return this.reviewsUpdated.asObservable();

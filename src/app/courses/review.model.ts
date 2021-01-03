@@ -3,5 +3,6 @@ export interface Review {
   author: string,
   title: string,
   content: string,
-  courseId: string
+  courseId: string,
+  flag: boolean
 }
