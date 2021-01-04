@@ -8,4 +8,5 @@ export interface Schedule {
   name: string;
   courses: Array<Course>;
   date: { date: Date; seconds: number};
+  visible: Boolean;
 }

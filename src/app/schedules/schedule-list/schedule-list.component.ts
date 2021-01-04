@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { SchedulesService } from '../schedules.service';
 import { Schedule } from '../schedule.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-schedule-list',

@@ -12,7 +12,8 @@ router.post('', checkAuth, (req, res, next) => {
     description: req.body.description,
     courses: req.body.courses,
     creator: req.userData.userId,
-    date: req.body.date
+    date: req.body.date,
+    visible: req.body.visible
   });
   schedule.save().then(result => {
     console.log(result._id);
@@ -35,7 +36,8 @@ router.put('/:id', checkAuth, (req, res, next) => {
     _id: req.body.id,
     name: req.body.name,
     courses: req.body.courses,
-    date: req.body.date
+    date: req.body.date,
+    visible: req.body.visible
   })
   Schedule.updateOne({ _id: req.params.id, creator: req.userData.userId }, sch).then(result => {
     if (result.nModified > 0) {

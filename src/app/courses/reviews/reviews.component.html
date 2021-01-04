@@ -1,4 +1,4 @@
-<h1>{{ courseInfo.subject + " " + courseInfo.catalog_nbr}}</h1>
+<h1>{{ courseInfo!.subject + " " + courseInfo!.catalog_nbr}}</h1>
 <mat-card>
   <form (submit)="onAddReview(reviewForm)" #reviewForm="ngForm">
     <h3>Write a Review</h3>

@@ -53,6 +53,9 @@
       #codeInput="ngModel">
     </mat-form-field>
     <div>
+      <mat-checkbox class="checkbox" [(ngModel)]="isVisible" [ngModelOptions]="{standalone: true}">Visible</mat-checkbox>
+    </div>
+    <div>
       <button
       mat-raised-button color="accent"
       type="submit">Save Schedule</button>

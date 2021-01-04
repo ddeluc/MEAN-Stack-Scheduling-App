@@ -19,6 +19,7 @@ export class ScheduleCreateComponent implements OnInit {
   private mode = 'create';
   private scheduleId: string | undefined;
   private coursesSub: Subscription | undefined;
+  isVisible = true;
 
   constructor(public schedulesService: SchedulesService, public courseService: CourseService, public route: ActivatedRoute) {}
 
@@ -30,8 +31,8 @@ export class ScheduleCreateComponent implements OnInit {
         if (data !== null)
           this.scheduleId = data;
           console.log(this.scheduleId);
-          this.schedulesService.getSchedule(this.scheduleId!).subscribe((schedule: { _id: any; name: any; courses: any; date: {date: Date; seconds: number; }; } ) => {
-            this.schedule = {id: schedule._id, description: '', author: localStorage.getItem("username")!, name: schedule.name, courses: schedule.courses, date: schedule.date };
+          this.schedulesService.getSchedule(this.scheduleId!).subscribe((schedule: { _id: any; name: any; courses: any; date: {date: Date; seconds: number; }; visible: boolean; } ) => {
+            this.schedule = {id: schedule._id, description: '', author: localStorage.getItem("username")!, name: schedule.name, courses: schedule.courses, date: schedule.date, visible: this.isVisible};
           });
         this.mode = 'edit';
       } else {
@@ -48,12 +49,12 @@ export class ScheduleCreateComponent implements OnInit {
     if (this.mode === 'create'){
       const author = localStorage.getItem("username")!;
       console.log(author);
-      this.schedulesService.addSchedule(author, form.value.description, form.value.name, this.addCourses);
+      this.schedulesService.addSchedule(author, form.value.description, form.value.name, this.addCourses, this.isVisible);
 
     } else {
       const now = new Date();
       const seconds = now.getTime();
-      this.schedulesService.updateSchedule(this.scheduleId!, localStorage.getItem("username")!, form.value.description, form.value.name, this.addCourses, {date: now, seconds: seconds});
+      this.schedulesService.updateSchedule(this.scheduleId!, localStorage.getItem("username")!, form.value.description, form.value.name, this.addCourses, {date: now, seconds: seconds}, this.isVisible );
     }
     this.addCourses = [];
     form.resetForm();

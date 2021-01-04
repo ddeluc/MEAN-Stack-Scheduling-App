@@ -19,7 +19,7 @@ export class SchedulesService {
   getSchedules() {
     this.http.get<{message: string, schedules: any}>('http://localhost:3000/api/schedules')
       .pipe( map((schData) => {
-        return schData.schedules.map((sch: { name: string; author: string; description: any; courses: number; _id: string; creator: string; date: {date: Date, seconds: number } }) => {
+        return schData.schedules.map((sch: { name: string; author: string; description: any; courses: number; _id: string; creator: string; date: {date: Date, seconds: number }; visible: boolean; }) => {
           return {
             name: sch.name,
             author: sch.author,
@@ -27,7 +27,8 @@ export class SchedulesService {
             courses: sch.courses,
             id: sch._id,
             creator: sch.creator,
-            date: sch.date
+            date: sch.date,
+            visible: sch.visible
           }
         });
       }))
@@ -43,10 +44,10 @@ export class SchedulesService {
   }
 
   getSchedule(id: string) {
-    return this.http.get<{_id: string, name: string, courses: number, date: {date: Date, seconds: number}}>("http://localhost:3000/api/schedules/" + id);
+    return this.http.get<{_id: string, name: string, courses: number, date: {date: Date, seconds: number}, visible: boolean}>("http://localhost:3000/api/schedules/" + id);
   }
 
-  addSchedule(author: string, description: any, name: string, courses: Array<Course>) {
+  addSchedule(author: string, description: any, name: string, courses: Array<Course>, visible: boolean) {
     const now = new Date();
     const seconds = now.getTime();
     const schedule: Schedule = {
@@ -55,7 +56,8 @@ export class SchedulesService {
       description: description,
       name: name,
       courses: courses,
-      date: { date: now, seconds: seconds }
+      date: { date: now, seconds: seconds },
+      visible: visible
     };
     this.http.post<{message: string, schId: string}>('http://localhost:3000/api/schedules', schedule)
       .subscribe((responseData) => {
@@ -66,8 +68,8 @@ export class SchedulesService {
       });
   }
 
-  updateSchedule(id: string, author: string, description: any, schName: string, courses: Array<Course>, date: { date: Date; seconds: number; }) {
-    const schedule: Schedule = { id: id, author: author, description: description, name: schName, courses: courses, date: date };
+  updateSchedule(id: string, author: string, description: any, schName: string, courses: Array<Course>, date: { date: Date; seconds: number; }, visible: boolean ) {
+    const schedule: Schedule = { id: id, author: author, description: description, name: schName, courses: courses, date: date, visible: visible };
     this.http.put("http://localhost:3000/api/schedules/" + id, schedule)
       .subscribe(response => {
         const updatedSchedules = [...this.schedules];
